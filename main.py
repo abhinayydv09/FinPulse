@@ -34,8 +34,12 @@ def main():
     3. Summarizes and sends to Telegram
     4. Marks sent items in DB
     """
+    print("In main fun")
     logging.info("Starting FinPulse RSS Summarizer...")
+    print("Entering db_feed")
     create_table()
+    print("Exiting db")
+    print("fetching feeds")
 
     try:
         feeds = fetch_latest_feeds(limit=5)
@@ -43,6 +47,7 @@ def main():
     except Exception as e:
         logging.error(f"Failed to fetch feeds: {e}")
         return
+    print("exit feed")
 
     for feed in feeds:
         try:
@@ -50,6 +55,7 @@ def main():
             if not link:
                 logging.warning("Skipping feed without link.")
                 continue
+            print("db 2")
 
             # Skip already sent links
             if is_sent(link):
@@ -61,6 +67,7 @@ def main():
             source = feed.get("source", "Unknown")
             raw_summary_text = feed.get("summary_text", "")
             logging.info(f"{source} : {len(raw_summary_text)}")
+            print("summary")
 
             # Generate summary
             summary = summarize_text(raw_summary_text)
@@ -72,9 +79,11 @@ def main():
                 f"<i>{summary}</i>\n"
                 f"<a href='{link}'><i>Read more</i></a>"
             )
+            print("tele mssg")
 
             # Send to Telegram
             send_telegram_message(message)
+            print(db 3")
 
             # Record as sent
             mark_sent(title, link, source, published, summary)
