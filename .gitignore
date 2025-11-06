@@ -23,7 +23,6 @@ venv/
 env/
 
 # Logs
-logs/
 *.log
 
 # System files
