@@ -11,6 +11,7 @@ logging.basicConfig(
 
 def create_table():
     """Create table if it doesn't exist."""
+    os.makedirs(os.path.dirname(DB_PATH) or ".", exist_ok=True)
     try:
         conn = sqlite3.connect(DB_PATH)
         c = conn.cursor()
