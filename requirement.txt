@@ -3,5 +3,5 @@ python-telegram-bot==20.4
 python-dotenv==1.0.1
 transformers==4.57.1
 torch==2.8.0
-python-dotenv==1.0.1
+
 

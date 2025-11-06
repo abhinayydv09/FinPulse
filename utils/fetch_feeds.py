@@ -1,6 +1,5 @@
 import feedparser
-from utils.config import FEEDS
-
+from config import FEEDS
 from datetime import datetime
 
 def format_published_date(entry):
@@ -26,7 +25,8 @@ def fetch_latest_feeds(limit=5):
                             "title": e.title,
                             "published": format_published_date(e),
                             "link": e.link,
-                            "source": source
+                            "source": source,
+                            "summary_text": e.get("summary", e.get("description", ""))[:1500]
                             })
     return all_entries
                 

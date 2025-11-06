@@ -19,7 +19,8 @@ SUMMARY_PARAMS = {
     "max_length": 100,
     "min_length": 30,
     "length_penalty": 1.0,
-    "num_beams": 6
+    "num_beams": 6,
+    "early_stopping" : True
     }
 
 # Database path

@@ -1,9 +1,31 @@
-# Environment variables
+# FinPulse Project .gitignore
+
+# Environment variables (keep secrets safe)
 .env
 
-# Database file
+# SQLite database (stores sent feed records)
 feeds.db
 
-# Python cache files
+# Python cache and build files
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+*.db-journal
+
+# VSCode or IDE files
+.vscode/
+.idea/
+
+# Virtual environment folders
+venv/
+.env/
+env/
+
+# Logs
+logs/
+*.log
+
+# System files
+.DS_Store
+Thumbs.db
