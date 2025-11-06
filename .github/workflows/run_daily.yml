@@ -36,8 +36,13 @@ jobs:
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHANNEL: ${{ secrets.TELEGRAM_CHANNEL }}
-        run: docker run --rm -v ${GITHUB_WORKSPACE}/feeds.db:/app/feeds.db finpulse-bot
-
+        run: |
+          docker build -t finpulse-bot .
+          docker run --rm \
+            -e TELEGRAM_TOKEN="${TELEGRAM_TOKEN}" \
+            -e TELEGRAM_CHANNEL="${TELEGRAM_CHANNEL}" \
+            -v ${GITHUB_WORKSPACE}/feeds.db:/app/feeds.db finpulse-bot
+    
       # Upload updated feeds.db as artifact
       - name: Upload updated feeds.db as artifact
         if: success() || failure()
