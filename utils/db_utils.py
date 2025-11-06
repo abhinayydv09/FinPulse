@@ -1,6 +1,7 @@
 import sqlite3
 import logging
 from config import DB_PATH
+import os
 
 # Configure logging
 logging.basicConfig(
