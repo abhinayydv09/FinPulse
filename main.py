@@ -1,9 +1,20 @@
 import logging
+import os
 from utils.fetch_feeds import fetch_latest_feeds
 from utils.summarizer import summarize_text
 from utils.telegram_bot import send_telegram_message
 from utils.db_utils import create_table, is_sent, mark_sent
+import warnings
+from transformers import logging as hf_logger
 
+# Suppress Python warnings
+warnings.filterwarnings("ignore")
+
+# Suppress HuggingFace warnings
+hf_logger.set_verbosity_error()
+
+
+os.makedirs("logs", exist_ok=True)
 
 # Logging setup
 # -------------------------------------------------------
@@ -49,6 +60,7 @@ def main():
             published = feed.get("published", "N/A")
             source = feed.get("source", "Unknown")
             raw_summary_text = feed.get("summary_text", "")
+            logging.info(f"{source} : {len(raw_summary_text)}")
 
             # Generate summary
             summary = summarize_text(raw_summary_text)
@@ -56,10 +68,9 @@ def main():
             # Format message
             message = (
                 f"<b>{title}</b>\n"
-                f"<i>Source:</i> {source}\n"
-                f"<i>Published:</i> {published}\n\n"
-                f"{summary}\n\n"
-                f"<a href='{link}'>Read more</a>"
+                f"<i>{source} • {published}</i>\n\n"
+                f"<i>{summary}</i>\n"
+                f"<a href='{link}'><i>Read more</i></a>"
             )
 
             # Send to Telegram

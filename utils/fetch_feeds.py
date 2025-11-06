@@ -46,7 +46,7 @@ def fetch_latest_feeds(limit=5):
             for e in entries:
                 title = clean_html(e.get("title", "Untitled"))
                 summary_text = e.get("summary", e.get("description", ""))
-                summary_text = clean_html(summary_text)[:2500]
+                summary_text = clean_html(summary_text)[:25000]
 
                 all_entries.append({
                     "title": title,

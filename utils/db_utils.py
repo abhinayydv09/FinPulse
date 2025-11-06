@@ -56,7 +56,7 @@ def mark_sent(title, link, source, published, summary):
             """, (title, link, source, published, summary))
         conn.commit()
         conn.close()
-        logging.info(f"Marked as sent: {title}") the 
+        logging.info(f"Marked as sent: {title}")
     
     except Exception as e:
         logging.error(f"Error inserting sent feed: {e}", exc_info=True)

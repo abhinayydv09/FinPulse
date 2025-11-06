@@ -36,9 +36,9 @@ def summarize_text(text: str) -> str:
 
     try:
         # Trim text safely (avoid long articles causing overflow)
-        input_text = text.strip()[:2500]
+        input_text = text.strip()[:25000]
 
-        logging.info(f"Summarizing text of length {len(input_text)} characters...")
+        logging.info("Summarizing text of length {len(input_text)} characters...")
 
         # Use summary parameters from config
         summary_output = summarizer(

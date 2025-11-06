@@ -9,9 +9,9 @@ TELEGRAM_CHANNEL = os.getenv("TELEGRAM_CHANNEL")  # e.g. @your_channel or numeri
 
 # RSS feeds (defaults; you can override via .env or edit here)
 FEEDS = {
-    "Economics Times": os.getenv("FEED_ECONOMICTIMES", "https://economictimes.indiatimes.com/rssfeedstopstories.cms"),
+    "Economics Times": os.getenv("FEED_ECONOMICTIMES", "https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms"),
     "Money Control": os.getenv("FEED_MONEYCONTROL", "https://www.moneycontrol.com/rss/MCtopnews.xml"),
-    "NDTV Profit": os.getenv("FEED_NDTV", "https://feeds.feedburner.com/NdtvProfit-TopNews"),
+    "NDTV Profit": os.getenv("FEED_NDTV", "https://feeds.feedburner.com/ndtvprofit-latest"),
 }
 
 # Summarizer parameters
