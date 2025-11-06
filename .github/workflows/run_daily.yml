@@ -22,6 +22,7 @@ jobs:
       # Download previous feeds.db artifact if exists
       - name: Download previous feeds.db artifact
         uses: actions/download-artifact@v4
+        continue-on-error: true
         with:
           name: feeds-db-backup
           path: .
