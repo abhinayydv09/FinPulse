@@ -22,7 +22,7 @@ def send_telegram_message(message: str, delay: float = 1.0) -> None:
         delay (float): Optional delay between messages to prevent flooding
     """
     if not TELEGRAM_TOKEN or not TELEGRAM_CHANNEL:
-        logging.error("Telegram configuration missing in .env or config.py")
+        print("Telegram configuration missing in .env or config.py")
         return
 
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
