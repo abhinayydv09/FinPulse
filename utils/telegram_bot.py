@@ -32,6 +32,16 @@ def send_telegram_message(message: str, delay: float = 1.0) -> None:
         "parse_mode": "HTML",
         "disable_web_page_preview": False  
         }
+    try:
+        response = requests.post(url, data=payload)
+        print("🔹 Telegram response code:", response.status_code)
+        print("🔹 Telegram response text:", response.text[:200])
+        if response.status_code != 200:
+            print("❌ Failed to send message.")
+        else:
+            print("✅ Message sent successfully.")
+    except Exception as e:
+        print("❌ Exception while sending Telegram message:", e)
 
     try:
         response = requests.post(url, data=payload, timeout=10)
