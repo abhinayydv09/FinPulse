@@ -83,7 +83,7 @@ def main():
 
             # Send to Telegram
             send_telegram_message(message)
-            print(db 3")
+            print("db 3")
 
             # Record as sent
             mark_sent(title, link, source, published, summary)
