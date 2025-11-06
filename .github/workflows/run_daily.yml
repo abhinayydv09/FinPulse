@@ -1,0 +1,46 @@
+name: FinPulse Daily RSS
+
+on:
+  schedule:
+    - cron: "0 2 * * *"  # 8 AM IST
+  workflow_dispatch:
+
+jobs:
+  docker_run:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout repo
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      # Set up Docker
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+
+      # Download previous feeds.db artifact if exists
+      - name: Download previous feeds.db artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: feeds-db-backup
+          path: .
+
+      #  Build Docker image
+      - name: Build Docker image
+        run: docker build -t finpulse-bot .
+
+      # Run bot inside Docker container
+      - name: Run bot
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHANNEL: ${{ secrets.TELEGRAM_CHANNEL }}
+          run: docker run --rm -v ${GITHUB_WORKSPACE}/feeds.db:/app/feeds.db finpulse-bot
+
+      # Upload updated feeds.db as artifact
+      - name: Upload updated feeds.db as artifact
+        if: success() || failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: feeds-db-backup
+          path: feeds.db
