@@ -9,9 +9,8 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s"
 )
-print("inside db")
+
 def create_table():
-    print("insidetable")
     """Create table if it doesn't exist."""
     os.makedirs(os.path.dirname(DB_PATH) or ".", exist_ok=True)
     try:
@@ -63,4 +62,3 @@ def mark_sent(title, link, source, published, summary):
     
     except Exception as e:
         logging.error(f"Error inserting sent feed: {e}", exc_info=True)
-print("exiting db")
