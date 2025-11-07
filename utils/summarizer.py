@@ -26,7 +26,6 @@ except Exception as e:
 # Summarize text
 # -------------------------------------------------------
 def summarize_text(text: str) -> str:
-    print("inside summarize")
     """
     Summarizes input text using HuggingFace model defined in config.py.
     Uses parameters (max_length, min_length, etc.) from SUMMARY_PARAMS.
