@@ -39,7 +39,7 @@ def main():
     4. Marks sent items in DB
     """
     logging.info("Starting FinPulse RSS Summarizer...")
-    print("Entering db_feed")
+    
     create_table()
 
     try:
@@ -66,7 +66,6 @@ def main():
             source = feed.get("source", "Unknown")
             raw_summary_text = feed.get("summary_text", "")
             logging.info(f"{source} : {len(raw_summary_text)}")
-            print("summary")
 
             # Generate summary
             summary = summarize_text(raw_summary_text)
