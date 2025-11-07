@@ -22,7 +22,7 @@ def send_telegram_message(message: str, delay: float = 1.0) -> None:
         delay (float): Optional delay between messages to prevent flooding
     """
     if not TELEGRAM_TOKEN or not TELEGRAM_CHANNEL:
-        print("Telegram configuration missing in .env or config.py")
+        logging.error("Telegram configuration missing in .env or config.py")
         return
 
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
@@ -30,19 +30,9 @@ def send_telegram_message(message: str, delay: float = 1.0) -> None:
         "chat_id": TELEGRAM_CHANNEL,
         "text": message,
         "parse_mode": "HTML",
-        "disable_web_page_preview": False  
+        "disable_web_page_preview": False 
         }
-    try:
-        response = requests.post(url, data=payload)
-        print("🔹 Telegram response code:", response.status_code)
-        print("🔹 Telegram response text:", response.text[:200])
-        if response.status_code != 200:
-            print("❌ Failed to send message.")
-        else:
-            print("✅ Message sent successfully.")
-    except Exception as e:
-        print("❌ Exception while sending Telegram message:", e)
-
+    
     try:
         response = requests.post(url, data=payload, timeout=10)
         if response.status_code == 200:
