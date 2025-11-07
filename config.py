@@ -27,4 +27,4 @@ SUMMARY_PARAMS = {
 MODEL_NAME = "sshleifer/distilbart-cnn-12-6"
 
 # DB
-DB_PATH = "feeds.db"
+DB_PATH = os.path.join(os.getcwd(), "feeds.db")
