@@ -20,7 +20,7 @@ SUMMARY_PARAMS = {
     "min_length": 30,
     "length_penalty": 1.0,
     "num_beams": 6,
-    "early_stopping": "True".lower() in ("1", "true", "yes"),
+    "early_stopping": "True",
 }
 
 # Model
