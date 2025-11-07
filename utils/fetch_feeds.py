@@ -30,7 +30,6 @@ def format_published_date(entry):
     return "N/A"
 
 def fetch_latest_feeds(limit=5):
-    print("inside feed")
     """Fetch the latest news entries from multiple RSS feeds."""
     all_entries = []
                                                                                                         
