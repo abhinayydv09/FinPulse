@@ -58,3 +58,4 @@ jobs:
         with:
           name: finpulse-logs
           path: logs/app.log
+          if-no-files-found: warn
