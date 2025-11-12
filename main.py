@@ -35,7 +35,7 @@ def main():
         message = (
             f"<b>{title}</b>\n"
             f"<i>{source} • {published}</i>\n\n"
-            f"<i>{summary}</i>\n"
+            f"{summary}\n"
             f"<a href='{link}'><i>Read more</i></a>"
         )
 
