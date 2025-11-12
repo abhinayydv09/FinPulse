@@ -7,7 +7,7 @@
 ## Features
 
 - Fetch latest news from multiple RSS feeds (Economic Times, MoneyControl, NDTV Profit, etc.)
-- Summarize long news articles using **HuggingFace Transformer models** (`distilbart-cnn-12-6` by default)
+- Summarize long news articles using **HuggingFace Transformer models** (`distilbart-cnn-12-6`)
 - Send formatted messages directly to your **Telegram channel**
 - Avoid duplicate messages by storing already-sent feeds in a SQLite database
 - Fully **Dockerized** for easy deployment
@@ -38,7 +38,7 @@ pip install -r requirements.txt
 
 ### 4. Configure environment variables
 
-Create a .env file in the root directory:
+Create a `.env` file in the root directory:
 ``` env
 TELEGRAM_TOKEN=your_telegram_bot_token
 TELEGRAM_CHANNEL=@your_channel_or_chat_id
@@ -52,7 +52,7 @@ python main.py
 ```
 
 - The bot fetches the latest RSS feeds, summarizes them, and sends messages to your Telegram channel.
-- ```data/feeds.db``` will be created automatically to track sent feeds.
+- `data/feeds.db` will be created automatically to track sent feeds.
 
 ---
 
@@ -71,14 +71,13 @@ docker run --rm \
   finpulse-bot
 ```
 
-- ```-v ${PWD}:/app``` ensures your database and logs persist locally.
+- `-v ${PWD}:/app` ensures your database and logs persist locally.
 
 ---
 
 ## GitHub Actions (Automated Daily Run)
-- The workflow run_daily.yml automatically runs the bot daily at 8 AM IST.
-- Downloads the previous feeds.db artifact, runs the bot, and uploads the updated database.
-- Logs are also uploaded as artifacts for debugging.
+- The workflow `run_daily.yml` automatically runs the bot daily at 8 AM IST.
+- Downloads the previous `feeds.db` artifact, runs the bot, and uploads the updated database.
 
 ---
 
@@ -104,7 +103,7 @@ FinPulse/
 
 ## Adding More Feeds
 
-Edit config.py and update the FEEDS dictionary:
+Edit `config.py` and update the `FEEDS` dictionary:
 ```python
 FEEDS = {
     "Economics Times": "https://economictimes.indiatimes.com/markets/rssfeeds/1977021501.cms",
@@ -114,9 +113,9 @@ FEEDS = {
 ```
 ---
 ## Notes
-- **Summarization model:** By default, the bot uses sshleifer/distilbart-cnn-12-6.
-- **Database:** data/feeds.db tracks sent messages to avoid duplicates.
+- **Summarization model:** By default, the bot uses `sshleifer/distilbart-cnn-12-6`.
+- **Database:** `data/feeds.db` tracks sent messages to avoid duplicates.
 
 ## Author
-** Created by AY **
+  **Created by AY**
 
