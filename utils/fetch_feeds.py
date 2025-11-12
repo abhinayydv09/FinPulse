@@ -1,64 +1,38 @@
 import feedparser
-import logging
 from config import FEEDS
 from datetime import datetime
 from html import unescape
 import re
 
-# Configure logging
-logging.basicConfig(
-    filename="logs/app.log",
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s"
-)
-
 def clean_html(raw_html):
     """Remove HTML tags and decode HTML entities."""
-    clean_text = re.sub(r'<.*?>', '', raw_html)
-    return unescape(clean_text.strip())
+    return unescape(re.sub(r'<.*?>', '', raw_html).strip())
 
 def format_published_date(entry):
-    """Format the published date to a human-readable form."""
+    """Format published date to readable form."""
     published_raw = entry.get("published", None)
     if published_raw and hasattr(entry, "published_parsed"):
         try:
-            published_dt = datetime(*entry.published_parsed[:6])
-            return published_dt.strftime("%A, %d %b %Y")
-        
-        except Exception:
+            dt = datetime(*entry.published_parsed[:6])
+            return dt.strftime("%A, %d %b %Y")
+        except:
             return published_raw
     return "N/A"
 
 def fetch_latest_feeds(limit=5):
-    """Fetch the latest news entries from multiple RSS feeds."""
+    """Fetch latest feeds from multiple sources."""
     all_entries = []
-                                                                                                        
     for source, url in FEEDS.items():
-        try:
-            feed = feedparser.parse(url)
-            if not feed.entries:
-                logging.warning(f"No entries found for {source}.")
-                continue
-
-            entries = feed.entries[:limit]
-            logging.info(f"Fetched {len(entries)} articles from {source}.")
-
-            for e in entries:
-                title = clean_html(e.get("title", "Untitled"))
-                summary_text = e.get("summary", e.get("description", ""))
-                summary_text = clean_html(summary_text)[:25000]
-
-                all_entries.append({
-                    "title": title,
-                    "published": format_published_date(e),
-                    "link": e.get("link", ""),
-                    "source": source,
-                    "summary_text": summary_text
-                })
-                                                                                                                                                                                                                                
-        except Exception as ex:
-            logging.error(f"Failed to parse feed from {source}: {ex}", exc_info=True)
-
-    logging.info(f"Total entries fetched: {len(all_entries)}")
+        feed = feedparser.parse(url)
+        entries = feed.entries[:limit] if feed.entries else []
+        for e in entries:
+            title = clean_html(e.get("title", "Untitled"))
+            summary_text = clean_html(e.get("summary", e.get("description", "")))[:1024]
+            all_entries.append({
+                "title": title,
+                "published": format_published_date(e),
+                "link": e.get("link", ""),
+                "source": source,
+                "summary_text": summary_text
+            })
     return all_entries
-                                                                                                                                                            

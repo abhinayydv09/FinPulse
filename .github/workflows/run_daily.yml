@@ -10,52 +10,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout repo
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      # Set up Docker
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+      - uses: docker/setup-buildx-action@v3
 
-
-      # Download previous feeds.db artifact if exists
       - name: Download previous feeds.db artifact
         uses: actions/download-artifact@v4
         continue-on-error: true
         with:
           name: feeds-db-backup
-          path: ./
+          path: ./data
 
-      #  Build Docker image
       - name: Build Docker image
         run: docker build -t finpulse-bot .
 
-      # Run bot inside Docker container
       - name: Run bot
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHANNEL: ${{ secrets.TELEGRAM_CHANNEL }}
         run: |
-          docker build -t finpulse-bot .
           docker run --rm \
             -e TELEGRAM_TOKEN="${TELEGRAM_TOKEN}" \
             -e TELEGRAM_CHANNEL="${TELEGRAM_CHANNEL}" \
             -v ${GITHUB_WORKSPACE}:/app finpulse-bot
-    
-      # Upload updated feeds.db as artifact
+
       - name: Upload updated feeds.db as artifact
-        if: success() || failure()
         uses: actions/upload-artifact@v4
         with:
           name: feeds-db-backup
-          path: feeds.db
-
-      # Upload logs as artifact
-      - name: Upload logs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: finpulse-logs
-          path: logs/app.log
-          if-no-files-found: warn
+          path: data/feeds.db
