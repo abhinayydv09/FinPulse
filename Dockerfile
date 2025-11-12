@@ -15,5 +15,6 @@ AutoModelForSeq2SeqLM.from_pretrained('sshleifer/distilbart-cnn-12-6')"
 # Copy project files
 COPY . .
 
+RUN mkdir -p data
 # Default command
 CMD ["python", "main.py"]
