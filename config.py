@@ -29,3 +29,4 @@ MODEL_NAME = "sshleifer/distilbart-cnn-12-6"
 # DB path
 DATA_DIR = os.path.join(os.getcwd(), "data")
 DB_PATH = os.path.join(DATA_DIR, "feeds.db")
+os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
